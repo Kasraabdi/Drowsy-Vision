@@ -1,0 +1,7 @@
+data/*
+!data/.gitkeep
+models/
+reports/
+__pycache__/
+sources/__pycache__/
+.idea/
