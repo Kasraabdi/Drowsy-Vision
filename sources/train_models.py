@@ -1,9 +1,9 @@
-
 import os
 import joblib
 from sklearn.linear_model import LogisticRegression
 from sklearn.svm import SVC
 from sklearn.ensemble import RandomForestClassifier
+from sklearn.neural_network import MLPClassifier
 from sklearn.metrics import accuracy_score
 
 from sources.config import MODELS_DIR, RANDOM_SEED, MAX_SAMPLES_PER_CLASS
@@ -15,7 +15,15 @@ def get_trained_models(X_train, y_train):
     models = {
         "Logistic_Regression": LogisticRegression(max_iter=1000, random_state=RANDOM_SEED),
         "SVM": SVC(kernel="rbf", C=1.0, probability=True, random_state=RANDOM_SEED),
-        "Random_Forest": RandomForestClassifier(n_estimators=100, random_state=RANDOM_SEED)
+        "Random_Forest": RandomForestClassifier(n_estimators=100, random_state=RANDOM_SEED),
+        "Neural_Network_MLP": MLPClassifier(
+            hidden_layer_sizes=(128, 64),
+            activation="relu",
+            solver="adam",
+            max_iter=300,
+            early_stopping=True,
+            random_state=RANDOM_SEED
+        )
     }
 
     trained_models = {}
@@ -50,6 +58,7 @@ def evaluate_and_save_best(models, X_val, y_val):
     print(f"Saved to: {best_model_path}")
 
     return best_name, best_accuracy
+
 
 if __name__ == "__main__":
     print("Loading datasets...")
